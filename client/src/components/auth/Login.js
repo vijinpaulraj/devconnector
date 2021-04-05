@@ -54,7 +54,7 @@ const Login = () => {
                 <input
                     type="submit"
                     className="btn btn-primary"
-                    value="Register"
+                    value="Login"
                 />
             </form>
             <p className="my-1">
