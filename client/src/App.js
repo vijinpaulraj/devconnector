@@ -13,6 +13,7 @@ import PrivateRoute from './components/routing/PrivateRoute';
 import AddExperience from './components/profile/AddExperience';
 import AddEducation from './components/profile/AddEducation';
 import Profiles from './components/profiles/Profiles';
+import Profile from './components/profile/Profile';
 
 import { Provider } from 'react-redux';
 import store from './store';
@@ -49,6 +50,11 @@ const App = () => {
                                 exact
                                 path="/profiles"
                                 component={Profiles}
+                            />
+                            <Route
+                                exact
+                                path="/profile/:id"
+                                component={Profile}
                             />
                             <PrivateRoute
                                 exact

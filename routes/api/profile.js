@@ -27,6 +27,26 @@ router.get('/me', auth, async (req, res) => {
     }
 });
 
+// @route   GET api/profile/:profile_id
+// @desc    Get current user's profile
+// @access  Private
+
+router.get('/:profile_id', auth, async (req, res) => {
+    try {
+        const profile = await Profile.findOne({
+            user: req.params.profile_id
+        }).populate('user', ['name', 'avatar']);
+
+        if (!profile) {
+            res.status(400).json({ msg: `Profile doesn't exist` });
+        }
+        res.json(profile);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+});
+
 // @route   POST api/profile
 // @desc    Create or udpate user profile
 // @access  Private
@@ -130,7 +150,7 @@ router.get('/', async (req, res) => {
     }
 });
 
-// @route   POST api/profile/user/:user_id
+// @route   GET api/profile/user/:user_id
 // @desc    Get profile by user ID
 // @access  Public
 
@@ -340,7 +360,7 @@ router.delete('/education/:edu_id', auth, async (req, res) => {
 router.get('/github/:username', (req, res) => {
     const uri = `https://api.github.com/users/${
         req.params.username
-    }?per_page=5&sort=created:asc&client_id=${config.get(
+    }/repos?per_page=5&sort=created:asc&client_id=${config.get(
         'githubClientId'
     )}&client_secret=${config.get('githubSecret')}`;
 
